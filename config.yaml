@@ -1,0 +1,7 @@
+32bit: false
+memory: "2048"
+npmmirror: "https://registry.npmjs.org/"
+owner: "Bot Wrangler <bw@example.com>"
+name: "Hubot"
+description: "Delightfully aware robutt"
+adapter: "slack"
