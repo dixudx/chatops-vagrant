@@ -10,21 +10,27 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     abort("Your config.yaml must specify a '32bit' and 'memory' setting.")
   end
 
+  # Check Hubot Slack Token here
+  if !pref.has_key?('hubot_slack_token')
+    abort("Your config.yaml must specify a 'hubot_slack_token' setting.")
+  else
+    HUBOT_SLACK_TOKEN = pref['hubot_slack_token']
+    unless HUBOT_SLACK_TOKEN.start_with?('xoxb-')
+      puts "Error! 'hubot_slack_token' is required."
+      puts "Please specify it in config.yaml."
+      exit
+    end
+  end
+
   if pref['32bit']
     config.vm.box = "ubuntu/trusty32"
   else
     config.vm.box = "ubuntu/trusty64"
   end
 
-  config.vm.box = "ubuntu/trusty64"
-
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
-
-  # Every Vagrant development environment requires a box. You can search for
-  # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "base"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -53,24 +59,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", pref["memory"]]
-    vb.name = chatops
+    vb.name = "chatops"
   end
 
-  # View the documentation for the provider you are using for more
-  # information on available options.
+  if pref['use_sources_list']
+    config.vm.provision "shell", path: "provision/apt_mirror.sh"
+  end
 
-  # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
-  # such as FTP and Heroku are also available. See the documentation at
-  # https://docs.vagrantup.com/v2/push/atlas.html for more information.
-  # config.push.define "atlas" do |push|
-  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
-  # end
+  st2_configs = [pref['st2_version'].nil? ? "stable": pref['st2_version']]
 
   hubot_configs = [pref['npmmirror'].nil? ? "https://registry.npmjs.org/": pref['npmmirror'],
                    pref['owner'].nil? ? "Bot Wrangler": pref['owner'],
                    pref['name'].nil? ? "Hubot": pref['name'],
-                   pref['description'].nil? ? "Delightfully aware robutt": pref['description'],
-                   pref['adapter'].nil? ? "shell": pref['adapter']]
+                   pref['description'].nil? ? "Delightfully aware robutt": pref['description']]
 
-  config.vm.provision "shell", path: "provisioning/chatops.sh", args: hubot_configs, privileged: false
+  chatops_configs = [hubot_configs[1], HUBOT_SLACK_TOKEN]
+
+  config.vm.provision "shell", path: "provision/stackstorm.sh", args: st2_configs, privileged: false
+  config.vm.provision "shell", path: "provision/hubot.sh", args: hubot_configs, privileged: false
+  config.vm.provision "shell", path: "provision/chatops.sh", args: chatops_configs, privileged: false
 end

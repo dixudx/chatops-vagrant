@@ -4,4 +4,6 @@ npmmirror: "https://registry.npmjs.org/"
 owner: "Bot Wrangler <bw@example.com>"
 name: "Hubot"
 description: "Delightfully aware robutt"
-adapter: "slack"
+hubot_slack_token: "HUBOT_SLACK_TOKEN ChangeMe"
+st2_version: "stable"
+use_sources_list: false
