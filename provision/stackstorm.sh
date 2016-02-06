@@ -7,7 +7,7 @@ exec_cmd "sudo apt-get install -y curl"
 
 ## install StackStorm
 print_status "installing StackStorm..."
-curl -s https://downloads.stackstorm.net/releases/st2/scripts/st2_deploy.sh $st2_ver | sudo bash
+exec_cmd "curl -s https://downloads.stackstorm.net/releases/st2/scripts/st2_deploy.sh $1 | sudo bash"
 # Set `enable = False` under `[auth]` section in file: `/etc/st2/st2/conf`
 sudo sed -i '/^\[auth\]$/,/^\[/ s/^enable = True/enable = False/' /etc/st2/st2.conf
 exec_cmd "sudo st2ctl restart"

@@ -54,7 +54,7 @@ Once you’re done, you’ll get one API Token.
 
 #### General Settings (Optional)
 
-You can choose to use your own **Ubuntu mirror** by setting `use_sources_list` to `true` in `config.yaml` and placing file `sources.list` in folder `provisioning`.
+You can choose to use your own **Ubuntu mirror** by setting `use_sources_list` to `true` in `config.yaml` and placing file `sources.list` in folder `provision`.
 
 You can also accelerate the installation of **Python packages** by setting `pip_mirror` in `config.yaml`.
 
