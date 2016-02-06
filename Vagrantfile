@@ -40,7 +40,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "forwarded_port", guest: 8080, host: 8080
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -58,7 +58,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.vm.synced_folder "../data", "/vagrant_data"
 
   config.vm.hostname = "chatops"
-  config.hostmanager.aliases = "www.chatops"
+  config.hostmanager.aliases = "chatops"
 
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", pref["memory"]]
@@ -67,6 +67,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   if pref['use_sources_list']
     config.vm.provision "shell", path: "provision/apt_mirror.sh"
+  end
+
+  if pref['pip_mirror']
+    config.vm.provision "shell", path: "provision/pip_conf.sh", args: pref['pip_mirror']
   end
 
   st2_configs = [pref['st2_version'].nil? ? "stable": pref['st2_version']]

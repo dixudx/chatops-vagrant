@@ -39,7 +39,7 @@ Configuration
 There is a configuration file called `config.yaml` that you can edit with a text editor, to change
 some settings.
 
-### StackStorm Settings (Mandatory)
+#### StackStorm Settings (Mandatory)
 
 Register for a Slack account if you don’t have one yet. Enable Hubot integration in settings.
 
@@ -47,16 +47,18 @@ Register for a Slack account if you don’t have one yet. Enable Hubot integrati
 
 Once you’re done, you’ll get one API Token.
 
-| Hubot Option      | Description                                          |
+| StackStorm Option | Description                                          |
 |-------------------|------------------------------------------------------|
 | hubot_slack_token | Hubot Integration API Token, e.g. "xoxb-12345-67890" |
 | st2_version       | The version of StackStorm, e.g. "stable" or "latest" |
 
-### General Settings (Optional)
+#### General Settings (Optional)
 
 You can choose to use your own **Ubuntu mirror** by setting `use_sources_list` to `true` in `config.yaml` and placing file `sources.list` in folder `provisioning`.
 
-### Virtual Machine Customizations (Optional)
+You can also accelerate the installation of **Python packages** by setting `pip_mirror` in `config.yaml`.
+
+#### Virtual Machine Customizations (Optional)
 
 Set the `32bit` option to `true` if you run on a system, that only supports 32bit virtualization or
 would like to test the 32 bit version for any other reason. You should normally not need this.
@@ -65,14 +67,14 @@ You can specify the amount of `memory` used by the virtual machine. It is set to
 since I think this is a good value that would work for the most users. If you however have very low memory
 you can try to decrease this value or increase it, if you have enough memory left in your system.
 
-### NPM Mirror Alternatives (Optional)
+#### NPM Mirror Alternatives (Optional)
 
 **IMPORTANT NOTICE:**
 
 Remember to configure the right registry for [npm](https://www.npmjs.com/) with '**npmmirror**' in `config.yaml`,
 which can speed up the installation of npm packages.
 
-### Hubot Customizations (Optional)
+#### Hubot Customizations (Optional)
 
 Also you can customize the [Hubot](https://hubot.github.com/) with below parameters.
 
@@ -81,3 +83,15 @@ Also you can customize the [Hubot](https://hubot.github.com/) with below paramet
 | owner         | Bot owner, e.g. "Bot Wrangler bw@example.com"     |
 | name          | Bot name, e.g. "Hubot"                            |
 | description   | Bot description, e.g. "Delightfully aware robutt" |
+
+
+Access StackStorm WebUI
+=======================
+
+**IMPORTANT NOTICE:**
+
+Port **8080** on your local machine has been used for port forwarding. If you want to reserve this port (**8080**)
+for other purposes, please modify that in file `Vagrantfile`.
+
+After the provision finished, you can access the **StackStorm WebUI** with address `http://localhost:8080`,
+which will be forwarded to port **8080** on the guest machine.
