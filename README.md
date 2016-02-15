@@ -5,6 +5,8 @@ This is a ChatOps virtual machine, , which utilizes [Slack](https://slack.com) a
 
 You can use it to play around with [ChatOps](https://stackstorm.com/2015/06/24/ansible-chatops-get-started-%F0%9F%9A%80/). It is not meant for any production usage.
 
+![Ansible and ChatOps with Slack and Hubot](http://i.imgur.com/HWN8T78.png)
+
 Installation
 ------------
 
@@ -86,12 +88,26 @@ Also you can customize the [Hubot](https://hubot.github.com/) with below paramet
 
 
 Access StackStorm WebUI
-=======================
+-----------------------
 
 **IMPORTANT NOTICE:**
 
-Port **8080** on your local machine has been used for port forwarding. If you want to reserve this port (**8080**)
-for other purposes, please modify that in file `Vagrantfile`.
+Port **8080**, **9100** and **9101** on your local machine have been used for port forwarding. If you want to reserve these ports for other purposes, please modify those in file `Vagrantfile`.
 
 After the provision finished, you can access the **StackStorm WebUI** with address `http://localhost:8080`,
 which will be forwarded to port **8080** on the guest machine.
+
+> username: `testu`
+
+> password: `testp`
+
+Try ChatOps
+-----------
+
+You should see your bot online in Slack and now you're ready to type some chat commands. Don't forget to invite your bot into the Slack channel: `/invite <your-bot-name>`. Your first ChatOps command is:
+
+```
+!help
+```
+
+![Ansible ChatOps with StackStorm, Hubot and Slack. List of ChatOps commands](http://i.imgur.com/bspyYZ7.png)

@@ -82,7 +82,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                    pref['name'].nil? ? "Hubot": pref['name'],
                    pref['description'].nil? ? "Delightfully aware robutt": pref['description']]
 
-  chatops_configs = [hubot_configs[1], HUBOT_SLACK_TOKEN]
+  chatops_configs = [hubot_configs[2], hubot_configs[3], HUBOT_SLACK_TOKEN]
 
   config.vm.provision "shell", path: "provision/stackstorm.sh", args: st2_configs, privileged: false
   config.vm.provision "shell", path: "provision/hubot.sh", args: hubot_configs, privileged: false
